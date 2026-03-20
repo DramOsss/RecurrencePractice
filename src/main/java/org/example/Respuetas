@@ -1,0 +1,247 @@
+
+Ejercicio 1
+
+    Punto 1:
+
+    factorial(5)
+    5 * factorial(4)
+        4 * factorial(3)
+            3 * factorial(2)
+                2 * factorial(1)
+                    1  (caso base)
+
+    La funcion no calcula todo de una vez como se muestra en la cadena va guardando
+    el valor de n y dejando pendiente la opeacion n * hasta llegar al caso base
+    y luego resuelve.
+
+    Punto 2:
+
+    Solo hace una llamada recursiva por que no hay mas de un "Camino"
+
+    Punto 3:
+
+    Temporal
+    O(n) por que el problema se va reduciendo de n a n -1 y cada nivel hace un
+    trabajo contante.
+
+    Lineal
+    O(n) pues siempre habra n niveles
+
+    Punto 4:
+
+    En la version recursiva, cada llamada crea un un marco en la pila que almacena
+    el valor de n y la multplicacion pendiente, lo que genera un costo espacial de
+    O(n)
+
+    La version iterativa, este costo desaparece por que no almacena las llamadas
+    pendientes, si no que mantiene un acumulador que se actualiza en cada iteracion,
+    reduciendo el uso de la memoria a O(1);
+
+    Punto 5:
+
+    Este enfoque elimina el trabajo pendiente, pues lo guardamos en el acumulado
+    logrando esta manera cada llamda recursiva no necesita hacer operaciones
+    adicionales cuando regrese.
+
+    A pesar de esto java no garantiza la optimizacion de las llamadas en cola
+    por lo que cada invocacion sigue creando un nuevo marco en la pila.
+
+    Por lo que aunque el diseño elimina la dependencia de llamadas, la complejidad
+    espacial, siguen siendo O(n) al contrario de la iterativa que si disminuye
+    el uso de memoria a 0(1)
+
+    Punto 6:
+
+    El  famoso "depende" el problema es naturalmente recursivo pues, la version
+    recursiva puede hacer la solucion mas elegante, algo que podemos usar en
+    un contexto educativo.
+
+    Sim embargo si lo que buscamos es pura eficiencia (produccion) la version
+    iterativa sera camino a elijir en este caso
+
+
+Ejercicio 2
+
+    Punto 7
+
+    x -> Marcas de repeticion
+
+    fib(6)
+    |-- fib(5)
+    |   |-- fib(4)
+    |   |   |-- fib(3)
+    |   |   |   |-- fib(2)
+    |   |   |   |   |-- fib(1)
+    |   |   |   |   |-- fib(0)
+    |   |   |   |-- fib(1)x
+    |   |   |-- fib(2)x
+    |   |   |   |-- fib(1)x
+    |   |   |   |-- fib(0)x
+    |   |-- fib(3)x
+    |   |   |-- fib(2)x
+    |   |   |   |-- fib(1)x
+    |   |   |   |-- fib(0)x
+    |   |   |-- fib(1)x
+    |-- fib(4) x
+        |-- fib(3)x
+        |   |-- fib(2)x
+        |   |   |-- fib(1)x
+        |   |   |-- fib(0)x
+        |   |-- fib(1)x
+        |-- fib(2)x
+            |-- fib(1)x
+            |-- fib(0)x
+
+    Punto8:
+
+
+    El costo se da en la repeticion de los subproblemas ya resultos.
+    Cada llamada de fib(n) genera dos llamadas adicionales, las cuales
+    muchas corresponden a los mismos valores de n creando redundancia
+
+
+    Punto 9:
+
+    Ejemplo fib (4), fib (4),fib (3), generando trabajo reduntante ya que son
+    los mismos subproblemas, creciendo exponecialmente el numero de llamadas.
+
+
+    Punto 10:
+
+    Cuanto implementamos memorizacion cada valor de fib(n) se calcula
+    una unica ves y se almacena en memoria. cuando el mismo subproblema
+    vuelve a aparecer, el resultado se obtiene en un tiempo constante en vez de
+    tener que computarlo otra vez
+
+    Eliminando la redundancia de la version ingenua, mejorando la complejidad temporal
+    de O(2^n) a 0(n), sin eliminar la recursion de la solucion.
+
+
+    Punto 11:
+
+    La tabulcion no solo cambia la implementacion tambien la manera de como
+    vemos el problema en la version recursiva, el calculo se realiza de arriba abajo
+    descomponiendolo en partes mas pequeñas dependiendo del stack de llamadas.
+
+    Sin embargo, la tabulacion lo resuelve de abajo hacia arriba, donde empieza
+    reolviendo los casos base contruyendo de forma progresiva los resultados
+    para llegar al valor deseado
+
+
+    Punto 12:
+
+    En este escenario a mi entender la mejor opcion es utilizar la forma iterativa usando tabulacion
+    pues nos permite calcular los valores de forma eficiente en tiempo lineal y el overhead del stack
+    ademas, ya calculados los valores , cada consulta puede respondesere en tiempo constante,
+    lo que la hace idea para este tipo de casos.
+
+
+
+Ejercicio 3:
+
+    Punto 13:
+
+    A -> C
+    A -> B
+    C -> B
+    A -> C
+    B -> A
+    B -> C
+    A -> C
+
+    Esto pasa porque primero hay que mover los 2 discos de arriba para
+    quitarle el camino al disco grande. Despues se mueve el disco mas grande
+    de A a C. Luego se vuelven a mover los 2 discos pequeños, pero ahora desde B hasta C.
+
+    El movimiento del disco mas grande divide la solución en dos partes casi
+    iguales, porque primero hay que mover n-1 discos para liberarlo, y
+    despues hay que volver a mover esos mismos n-1 discos para ponerlos arriba
+    de él. Por eso se dice que son dos subproblemas simetricos.
+
+    Punto 14:
+
+    PUNTO 15:
+
+    Hanoi tambien crece exponencialmente, pero no por la misma
+    razon que Fibonacci. En Fibonacci el problema grande es que se
+    repiten llamadas muchas veces, por ejemplo fib(3) o fib(2) salen varias veces
+    y se recalculan esto es redundante.
+
+    En cambio en Hanoi no hay trabajo inutil. Cada llamada representa
+    algo que si o si hay que hacer para mover los discos cumpliendo las reglas.
+    El algoritmo no esta perdiendo tiempo repitiendo cosas incesesarias,
+    sino que el problema en si obliga a hacer muchos movimientos.
+    Por eso tambien da exponencial, pero no porque este mal diseñado
+
+
+
+    pUNTO 16:
+
+    No existe una versión iterativa sencilla que mejore la complejidad
+    porque el numero de movimientos necesarios no depende de si el
+    algoritmo es recursivo o iterativo. Eso depende del problema mismo.
+
+    Aunque uno cambie la implementación y use ciclos o una pila manual,
+    igual hay que hacer 2^n - 1 movimientos. Entonces lo unico que cambia es
+    la forma en que se programa, pero no la cantidad minima de trabajo.
+    Por eso la complejidad temporal sigue siendo exponencial
+
+    pUNTO 17:
+
+    Punto 18:
+
+    Si el objetivo ya no es imprimir los movimientos sino solo
+    saber cuantos se necesitan, entonces el problema cambia bastante.
+    Ya no hace falta hacer todos los pasos ni simular cada movimiento.
+    Si se imprimen los movimientos, el tiempo es O(2^n) porque hay que
+    mostrar uno por uno los 2^n - 1 movimientos. Si solo se cuentan con
+    la recurrencia, el tiempo baja a O(n). Y si se usa la formula cerrada,
+    el tiempo baja mucho mas, practicamente constante.
+
+
+    Punto 19:
+
+    Hanoi es un muy buen contraejemplo para la idea de que si algo da O(2^n)
+    entonces esta mal hecho. Aqui el algoritmo no esta mal diseñado.
+    Lo que pasa es que el problema obliga a hacer una cantidad exponencial de movimientos.
+
+    Cada paso que hace el algoritmo es necesario, no hay repeticiones
+    inutiles ni trabajo sobrante. Por eso este ejemplo enseña que
+    no siempre una complejidad grande significa mal diseño. A veces
+    simplemente el problema es asi y no se puede evitar. Lo importante
+    es entender de donde sale el costo: si sale por errores del algoritmo
+    o por la estructura del problema.
+
+
+Ejercicio 4:
+
+    Punto 20:
+
+    Aunque parece lineal, usar substring y concatenar hace que se copien strings muchas veces,
+    y el costo sube hasta O(n^2). Con un arreglo de chars se evita eso y solo se
+    intercambian posiciones, quedando en O(n). El problema estaba en la recursividad
+    , sino en las operaciones con strings.
+
+    Punto 21:
+
+    La version original reduce n en n-1 por eso es O(n).
+    En la optimizada se divide el problema a la mitad (n/2),
+    usando que x^n = (x^(n/2))^2, entonces la complejidad pasa a O(log n).
+    El cambio clave es que ya no baja uno por uno sino por mitades.
+
+    Punto 22:
+
+    No siempre vale la pena modificarlo, ya que el tiempo no mejora.
+    Solo es valido cuenaod se quiere disminuir el uso de memoria o evitar
+    problemas con pilas grandes(overflow)
+
+
+
+
+
+
+
+
+
+
+
